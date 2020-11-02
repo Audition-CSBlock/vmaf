@@ -1,4 +1,6 @@
 import copy
+import hashlib
+
 from vmaf.tools.decorator import deprecated, override
 
 __copyright__ = "Copyright 2016-2020, Netflix, Inc."
@@ -33,6 +35,8 @@ class Asset(WorkdirEnabled):
 
     SUPPORTED_YUV_TYPES = ['yuv420p', 'yuv422p', 'yuv444p',
                            'yuv420p10le', 'yuv422p10le', 'yuv444p10le',
+                           'yuv420p12le', 'yuv422p12le', 'yuv444p12le',
+                           'yuv420p16le', 'yuv422p16le', 'yuv444p16le',
                            'notyuv']
     DEFAULT_YUV_TYPE = 'yuv420p'
 
@@ -487,6 +491,10 @@ class Asset(WorkdirEnabled):
         quality_str = self.quality_str
         if quality_str:
             s += "_q_{quality_str}".format(quality_str=quality_str)
+
+        if len(s) > 196:  # upper limit of filename is 256 but leave some space for prefix/suffix
+            s = hashlib.sha1(s.encode("utf-8")).hexdigest()
+
         return s
 
     def to_normalized_dict(self):

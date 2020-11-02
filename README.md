@@ -1,7 +1,7 @@
 VMAF - Video Multi-Method Assessment Fusion
 ===================
 
-[![Build Status](https://travis-ci.org/Netflix/vmaf.svg?branch=master)](https://travis-ci.org/Netflix/vmaf) [![libvmaf](https://github.com/Netflix/vmaf/workflows/libvmaf/badge.svg)](https://github.com/Netflix/vmaf/actions?query=workflow%3Alibvmaf) [![Windows](https://github.com/Netflix/vmaf/workflows/Windows/badge.svg)](https://github.com/Netflix/vmaf/actions?query=workflow%3AWindows)
+[![Build Status](https://travis-ci.com/Netflix/vmaf.svg?branch=master)](https://travis-ci.com/Netflix/vmaf) [![libvmaf](https://github.com/Netflix/vmaf/workflows/libvmaf/badge.svg)](https://github.com/Netflix/vmaf/actions?query=workflow%3Alibvmaf) [![Windows](https://github.com/Netflix/vmaf/workflows/Windows/badge.svg)](https://github.com/Netflix/vmaf/actions?query=workflow%3AWindows)
 
 VMAF is a perceptual video quality assessment algorithm developed by Netflix. VMAF Development Kit (VDK) is a software package that contains the VMAF algorithm implementation, as well as a set of tools that allows a user to train and test a custom VMAF model. Read [this](https://medium.com/netflix-techblog/toward-a-practical-perceptual-video-quality-metric-653f208b9652) techblog post for an overview, or [this](https://medium.com/netflix-techblog/vmaf-the-journey-continues-44b51ee9ed12) post for the latest updates and tips for best practices.
 
@@ -22,13 +22,13 @@ Refer to the [FAQ](FAQ.md) page.
 
 ## Usages
 
-The VDK package offers a number of ways for a user to interact with the VMAF algorithm implementations. The core feature extraction library is written in C. The rest scripting code including the classes for machine learning regression, training and testing VMAF models and etc., is written in Python. Besides, there is C++ an implementation partially replicating the logic in the regression classes, such that the VMAF prediction (excluding training) is fully implemented.
+The VDK package offers a number of ways to interact with the VMAF implementation. The core `libvmaf` library with feature extractors is written in C. The rest of the code including the classes for machine learning regression, training and testing VMAF models and etc., is written in Python. Besides, the `libvmaf` C library partially replicates the logic in the regression classes, such that the VMAF prediction (excluding training) is fully implemented.
 
 There are a number of ways one can use the package:
 
-  - [VMAF Python library](resource/doc/VMAF_Python_library.md) offers full functionalities including running basic VMAF command line, running VMAF on a batch of video files, training and testing a VMAF model on video datasets, and visualization tools, etc.
-  - [`vmafossexec` - a C++ executable](resource/doc/vmafossexec.md) offers running the prediction part of the algorithm in full, such that one can easily deploy VMAF in a production environment without needing to configure the Python dependencies. Additionally, `vmafossexec` offers a number of exclusive features, such as 1) speed optimization using multi-threading and skipping frames, 2) optionally computing PSNR, SSIM and MS-SSIM metrics in the output.
-  - [`libvmaf` - a C library](libvmaf/README.md) offers an interface to incorporate VMAF into your C/C++ code.
+  - [VMAF Python library](resource/doc/VMAF_Python_library.md) offers a full array of wrapper classes and scripts to allow running basic VMAF command line, training and testing a VMAF model on video datasets, and visualization tools, etc.
+  - [`vmafossexec` - a C executable](resource/doc/vmafossexec.md) offers running the prediction part of the algorithm in full, such that one can easily deploy VMAF in a production environment without needing to configure the Python dependencies. Additionally, `vmafossexec` offers a number of exclusive features, such as 1) speed optimization using multi-threading and skipping frames, 2) optionally computing PSNR, SSIM and MS-SSIM metrics in the output.
+  - [`libvmaf` - a C library](libvmaf/README.md) offers an interface to incorporate VMAF into your C code.
   - VMAF is now included as a filter in [FFmpeg](http://ffmpeg.org/) and can be configured using: `./configure --enable-libvmaf`. See the [FFmpeg documentation](resource/doc/ffmpeg.md) for usage.
   - [VMAF Dockerfile](Dockerfile) generates a VMAF docker image from the [VMAF Python library](resource/doc/VMAF_Python_library.md). Refer to [this](resource/doc/docker.md) document for detailed usages.
   - Build VMAF on Windows: follow instructions on [this](resource/doc/BuildForWindows.md) page.
@@ -56,3 +56,7 @@ Over time, we have received feedbacks on when VMAF's prediction does not reflect
 ## References
 
 Refer to the [references](resource/doc/references.md) page.
+
+## External Resources
+
+Refer to [this page](resource/doc/external_resource.md) for a list of 3rd-party tools built on top of VMAF.

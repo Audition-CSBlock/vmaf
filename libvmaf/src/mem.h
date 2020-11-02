@@ -19,6 +19,8 @@
 #ifndef __VMAF_MEM_H__
 #define __VMAF_MEM_H__
 
+#include <stddef.h>
+
 #define MAX_ALIGN 32
 
 #define ALIGN_FLOOR(x) ((x) - (x) % MAX_ALIGN)

@@ -44,8 +44,21 @@ static int init(VmafFeatureExtractor *fex, enum VmafPixelFormat pix_fmt,
     s->dist = aligned_malloc(s->float_stride * h, 32);
     if (!s->dist) goto free_ref;
 
-    s->peak = bpc == 8 ? 255.0 : 255.75;
-    s->psnr_max = bpc == 8 ? 60.0 : 72.0;
+    if (bpc == 8) {
+        s->peak = 255.0;
+        s->psnr_max = 60.0;
+    } else if (bpc == 10) {
+        s->peak = 255.75;
+        s->psnr_max = 72.0;
+    } else if (bpc == 12) {
+        s->peak = 255.9375;
+        s->psnr_max = 84.0;
+    } else if (bpc == 16) {
+        s->peak = 255.99609375;
+        s->psnr_max = 108.0;
+    } else {
+        goto fail;
+    }
 
     return 0;
 
@@ -56,11 +69,15 @@ static int init(VmafFeatureExtractor *fex, enum VmafPixelFormat pix_fmt,
 }
 
 static int extract(VmafFeatureExtractor *fex,
-                   VmafPicture *ref_pic, VmafPicture *dist_pic,
+                   VmafPicture *ref_pic, VmafPicture *ref_pic_90,
+                   VmafPicture *dist_pic, VmafPicture *dist_pic_90,
                    unsigned index, VmafFeatureCollector *feature_collector)
 {
     AnsnrState *s = fex->priv;
     int err = 0;
+
+    (void) ref_pic_90;
+    (void) dist_pic_90;
 
     picture_copy(s->ref, s->float_stride, ref_pic, -128, ref_pic->bpc);
     picture_copy(s->dist, s->float_stride, dist_pic, -128, dist_pic->bpc);
